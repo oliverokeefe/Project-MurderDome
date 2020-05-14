@@ -1,9 +1,10 @@
 "use strict";
 //Example control
 Object.defineProperty(exports, "__esModule", { value: true });
-const Action_js_1 = require("./Action.js");
-class Player {
-    constructor(parentElement, playerName) {
+exports.Player = void 0;
+var Action_js_1 = require("./Action.js");
+var Player = /** @class */ (function () {
+    function Player(parentElement, playerName) {
         this.parent = parentElement;
         this.name = playerName;
         this.parent.classList.add("PlayerControl");
@@ -14,34 +15,35 @@ class Player {
         this.parent.appendChild(this._container);
         return;
     }
-    _createLabel() {
-        let label = document.createElement('label');
+    Player.prototype._createLabel = function () {
+        var label = document.createElement('label');
         label.classList.add("PlayerLabel");
         label.setAttribute('for', this.name);
         label.innerText = this.name;
         return label;
-    }
-    _createSelect() {
-        let select = document.createElement('select');
+    };
+    Player.prototype._createSelect = function () {
+        var _this = this;
+        var select = document.createElement('select');
         select.setAttribute('name', this.name);
-        Action_js_1.Action.playerActions.forEach((action) => {
-            select.appendChild(this._createOption(action));
+        Action_js_1.Action.playerActions.forEach(function (action) {
+            select.appendChild(_this._createOption(action));
         });
         this._selectElement = select;
-        this._changeEventHandler = () => { this._setSelectedAction(); };
+        this._changeEventHandler = function () { _this._setSelectedAction(); };
         this._selectElement.addEventListener("change", this._changeEventHandler);
         this._setSelectedAction();
         return select;
-    }
-    _createOption(action) {
-        let option = document.createElement('option');
+    };
+    Player.prototype._createOption = function (action) {
+        var option = document.createElement('option');
         option.setAttribute('value', action);
         option.innerText = action;
         return option;
-    }
-    _setSelectedAction() {
+    };
+    Player.prototype._setSelectedAction = function () {
         if (this._selectElement && this._selectElement.selectedIndex != -1 && this._selectElement.options.length > 0) {
-            let selectedOption = this._selectElement.options.item(this._selectElement.selectedIndex);
+            var selectedOption = this._selectElement.options.item(this._selectElement.selectedIndex);
             if (Action_js_1.Action.isValidAction(selectedOption.value)) {
                 this._selectedAction = new Action_js_1.Action(selectedOption.value, this.name);
             }
@@ -50,7 +52,7 @@ class Player {
             }
         }
         return;
-    }
+    };
     //private _attachChangeEventHandler(): void {
     //    if (this._selectElement && this._changeEventHandler) {
     //        this._selectElement.addEventListener("change", this._changeEventHandler);
@@ -61,9 +63,10 @@ class Player {
     //        this._selectElement.removeEventListener("change", this._changeEventHandler);
     //    }
     //}
-    getSelectedAction() {
+    Player.prototype.getSelectedAction = function () {
         return this._selectedAction;
-    }
-}
+    };
+    return Player;
+}());
 exports.Player = Player;
 //# sourceMappingURL=Player.js.map

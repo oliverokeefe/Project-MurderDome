@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "module": "AMD",
+    "target": "ES6",
+    "lib": [
+      "ES6",
+      "dom"
+    ],
+    "sourceMap": true,
+    "outFile": "./public/javascripts/script.js"
+  }
+}

@@ -13,7 +13,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>0a609db2-80a8-4358-830f-8da7d7c29cf4</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>app.js</StartupFile>
+    <StartupFile>server/server.js</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -31,62 +31,64 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="app.ts" />
-    <None Include="routes\index.ts" />
-    <None Include="routes\user.ts" />
-    <Content Include="public\javascripts\bundle.js" />
-    <Content Include="public\stylesheets\testStyle.css">
+    <None Include="server\server.ts" />
+    <None Include="server\routes\index.ts" />
+    <None Include="server\routes\user.ts" />
+    <Content Include="client\public\javascripts\domReady.js" />
+    <Content Include="client\public\javascripts\require.js">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="client\public\stylesheets\main.css" />
+    <Content Include="client\public\stylesheets\testStyle.css" />
+    <Content Include="client\tsconfig.json" />
+    <Content Include="server\tsconfig.json" />
     <Content Include="tsconfig.json" />
     <Content Include="package.json" />
-    <Content Include="public\stylesheets\main.css" />
     <Content Include="README.md" />
-    <Content Include="views\testPage.html">
+    <Content Include="client\views\testPage.html">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="views\index.pug" />
-    <Content Include="views\layout.pug" />
-    <Content Include="views\error.pug" />
+    <Content Include="client\views\index.pug" />
+    <Content Include="client\views\layout.pug" />
+    <Content Include="client\views\error.pug" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="src\classes\" />
-    <Folder Include="src\" />
-    <Folder Include="src\types\" />
-    <Folder Include="src\scripts\" />
-    <Folder Include="public\" />
-    <Folder Include="public\images\" />
-    <Folder Include="public\javascripts\" />
-    <Folder Include="public\stylesheets\" />
-    <Folder Include="routes\" />
-    <Folder Include="views\" />
+    <Folder Include="client\" />
+    <Folder Include="client\public\javascripts\" />
+    <Folder Include="client\public\stylesheets\" />
+    <Folder Include="client\src\scripts\" />
+    <Folder Include="client\src\types\" />
+    <Folder Include="server\" />
+    <Folder Include="shared\" />
+    <Folder Include="client\src\classes\" />
+    <Folder Include="client\src\" />
+    <Folder Include="client\public\" />
+    <Folder Include="client\public\images\" />
+    <Folder Include="server\routes\" />
+    <Folder Include="client\views\" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="src\classes\Action.ts" />
-    <TypeScriptCompile Include="src\classes\PriorityQueue.ts">
+    <TypeScriptCompile Include="client\src\classes\Action.ts" />
+    <TypeScriptCompile Include="client\src\classes\PriorityQueue.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\classes\testControl.ts">
+    <TypeScriptCompile Include="client\src\classes\testControl.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\classes\testData.ts">
+    <TypeScriptCompile Include="client\src\classes\testData.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="routes\scripts.ts">
+    <TypeScriptCompile Include="client\src\scripts\testScript.ts" />
+    <TypeScriptCompile Include="client\src\types\types.ts" />
+    <TypeScriptCompile Include="server\routes\scripts.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="routes\classes.ts" />
-    <TypeScriptCompile Include="routes\types.ts" />
-    <TypeScriptCompile Include="routes\testRoute.ts">
+    <TypeScriptCompile Include="server\routes\classes.ts" />
+    <TypeScriptCompile Include="server\routes\types.ts" />
+    <TypeScriptCompile Include="server\routes\testRoute.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <None Include="src\scripts\testScript.ts">
-      <SubType>Code</SubType>
-    </None>
-    <TypeScriptCompile Include="src\classes\Player.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="src\types\types.ts">
+    <TypeScriptCompile Include="client\src\classes\Player.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
   </ItemGroup>

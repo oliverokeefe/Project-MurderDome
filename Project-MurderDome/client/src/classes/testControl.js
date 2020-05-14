@@ -1,51 +1,54 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-class testControl {
-    constructor(input, output, handler) {
+exports.testControl = void 0;
+var testControl = /** @class */ (function () {
+    function testControl(input, output, handler) {
         this.setChangeEventHandler(handler);
         this.setInputElement(input);
         this.setOutputElement(output);
         return;
     }
-    _defaultChangeEventHandler() {
+    testControl.prototype._defaultChangeEventHandler = function () {
         //console.log(["Input", this._inputElement]);
         //console.log(["Output", this._outputElement]);
         if (this._inputElement && this._outputElement && this._inputElement.selectedIndex != -1 && this._inputElement.options.length > 0) {
-            let selectedOption = this._inputElement.options.item(this._inputElement.selectedIndex);
+            var selectedOption = this._inputElement.options.item(this._inputElement.selectedIndex);
             this._outputElement.innerHTML = selectedOption.value;
         }
         return;
-    }
-    _attachChangeEventHandler() {
+    };
+    testControl.prototype._attachChangeEventHandler = function () {
         if (this._inputElement && this._changeEventHandler) {
             this._inputElement.addEventListener("change", this._changeEventHandler);
         }
-    }
-    _detachChangeEventHandler() {
+    };
+    testControl.prototype._detachChangeEventHandler = function () {
         if (this._inputElement && this._changeEventHandler) {
             this._inputElement.removeEventListener("change", this._changeEventHandler);
         }
-    }
-    setInputElement(element, handler) {
+    };
+    testControl.prototype.setInputElement = function (element, handler) {
         this._detachChangeEventHandler();
         this._inputElement = element;
         this.setChangeEventHandler(handler);
-    }
-    setOutputElement(element) {
+    };
+    testControl.prototype.setOutputElement = function (element) {
         this._outputElement = element;
-    }
-    setChangeEventHandler(handler) {
+    };
+    testControl.prototype.setChangeEventHandler = function (handler) {
+        var _this = this;
         this._detachChangeEventHandler();
         if (handler) {
             this._changeEventHandler = handler;
         }
         else {
-            this._changeEventHandler = () => {
-                this._defaultChangeEventHandler();
+            this._changeEventHandler = function () {
+                _this._defaultChangeEventHandler();
             };
         }
         this._attachChangeEventHandler();
-    }
-}
+    };
+    return testControl;
+}());
 exports.testControl = testControl;
 //# sourceMappingURL=testControl.js.map

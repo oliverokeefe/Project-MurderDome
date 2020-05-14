@@ -1,21 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const Player_1 = require("../classes/Player");
-const Action_1 = require("../classes/Action");
-const PriorityQueue_1 = require("../classes/PriorityQueue");
-let players = [];
-let enterBtn;
-let output;
+var Player_1 = require("../classes/Player");
+var Action_1 = require("../classes/Action");
+var PriorityQueue_1 = require("../classes/PriorityQueue");
+var players = [];
+var enterBtn;
+var output;
 function enterBtnClickHandler() {
-    let actionList = new PriorityQueue_1.PriorityQueue(Action_1.Action.comparator);
+    var actionList = new PriorityQueue_1.PriorityQueue(Action_1.Action.comparator);
     console.log(JSON.parse(JSON.stringify(actionList)));
     players.forEach(function (player, index) {
         actionList.push(player.getSelectedAction());
     });
     console.log(JSON.parse(JSON.stringify(actionList)));
-    let actionLog = "";
+    var actionLog = "";
     while (!actionList.isEmpty()) {
-        let curAction = actionList.pop();
+        var curAction = actionList.pop();
         console.log(curAction);
         actionLog += curAction.owner + ": " + curAction.action + "<br/>";
     }

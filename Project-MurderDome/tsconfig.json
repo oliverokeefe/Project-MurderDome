@@ -1,13 +1,10 @@
 {
-  "compilerOptions": {
-    "module": "CommonJS",
-    "target": "es6",
-    "lib": [
-      "es6",
-      "dom"
-    ],
-    "sourceMap": true
-  },
+  "files": [],
+  "include": [],
+  "references": [
+    { "path": "./client" },
+    { "path": "./server" }
+  ],
   "exclude": [
     "node_modules"
   ]

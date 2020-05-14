@@ -62,11 +62,20 @@ function init() {
     return;
 }
 
-window.onload = function () {
-    init();
+//window.onload = function () {
+//    init();
 
-    return;
-};
+//    return;
+//};
+
+//require(['../../public/javascripts/domReady!'], function (doc) {
+//    //This function is called once the DOM is ready,
+//    //notice the value for 'domReady!' is the current
+//    //document.
+
+//    init()
+//});
+
 
 
 

@@ -5,30 +5,18 @@ import path = require('path');
 import testRoute from './routes/testRoute';
 import index from './routes/index';
 import users from './routes/user';
-//import scripts from './routes/scripts';
-//import classes from './routes/classes';
-//import types from './routes/types';
 
 const app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, '../client/views'));
 app.set('view engine', 'pug');
 
-app.use(express.static(path.join(__dirname, 'public')));
-//app.use(express.static(path.join(__dirname, 'src')));
+app.use(express.static(path.join(__dirname, '../client/public')));
 
 app.use('/test',testRoute);
 app.use('/index', index);
 app.use('/users', users);
-//app.use('/src/scripts',scripts);
-//app.use('/src/classes', classes);
-//app.use('/src/types', types);
-
-
-//app.get('/scripts/testScript.js', (req: express.Request, res: express.Response) => {
-//    res.sendFile(path.join(__dirname, 'scripts', 'testScript.js'));
-//});
 
 app.get('/', (req: express.Request, res: express.Response) => {
     res.sendFile(path.join(app.get('views'), 'testPage.html'));

@@ -1,29 +1,40 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-class Action {
-    constructor(action, doer) {
+
+import type { action } from '../types/types';
+
+export class Action {
+
+    static readonly playerActions: string[] = ["attack", "defend", "move", "follow", "rest", "wait"];
+
+    readonly owner: string;
+    readonly action: string;
+
+    private _priority: number;
+
+    constructor(action: action, doer: string) {
         this.owner = doer;
         this.action = action;
         this._setPriorityFromAction();
     }
-    _setPriorityFromAction() {
+
+    private _setPriorityFromAction() {
+
         switch (this.action) {
             case ("attack"):
                 this._priority = 1;
                 break;
-            case ("defend"):
+            case("defend"):
                 this._priority = 2;
                 break;
-            case ("move"):
+            case("move"):
                 this._priority = 3;
                 break;
-            case ("follow"):
+            case("follow"):
                 this._priority = 4;
                 break;
-            case ("rest"):
+            case("rest"):
                 this._priority = 5;
                 break;
-            case ("wait"):
+            case("wait"):
                 this._priority = 6;
                 break;
             default:
@@ -31,11 +42,18 @@ class Action {
                 break;
         }
     }
-    static comparator(a, b) {
+
+
+    public static comparator(a: Action, b: Action): boolean {
+
         return a._priority < b._priority;
+
     }
-    static isValidAction(action) {
+
+    public static isValidAction(action: string): boolean {
+
         let isValid = false;
+
         switch (action) {
             case ("attack"):
             case ("defend"):
@@ -49,9 +67,14 @@ class Action {
                 isValid = false;
                 break;
         }
+
         return isValid;
     }
+
+
 }
-exports.Action = Action;
-Action.playerActions = ["attack", "defend", "move", "follow", "rest", "wait"];
-//# sourceMappingURL=Action.js.map
+
+
+
+
+

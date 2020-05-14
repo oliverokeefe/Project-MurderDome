@@ -1,60 +1,42 @@
-
-
-import { action } from '../types/types.js'
-
-export class Action {
-
-    static readonly playerActions: string[] = ["attack", "defend", "move", "follow", "rest", "wait"];
-
-    readonly owner: string;
-    readonly action: string;
-
-    private _priority: number;
-
-    constructor(action: action, doer: string) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Action = void 0;
+var Action = /** @class */ (function () {
+    function Action(action, doer) {
         this.owner = doer;
         this.action = action;
         this._setPriorityFromAction();
     }
-
-    private _setPriorityFromAction() {
-
+    Action.prototype._setPriorityFromAction = function () {
         switch (this.action) {
             case ("attack"):
                 this._priority = 1;
                 break;
-            case("defend"):
+            case ("defend"):
                 this._priority = 2;
                 break;
-            case("move"):
+            case ("move"):
                 this._priority = 3;
                 break;
-            case("follow"):
+            case ("follow"):
                 this._priority = 4;
                 break;
-            case("rest"):
+            case ("rest"):
                 this._priority = 5;
                 break;
-            case("wait"):
+            case ("wait"):
                 this._priority = 6;
                 break;
             default:
                 this._priority = 1000;
                 break;
         }
-    }
-
-
-    public static comparator(a: Action, b: Action): boolean {
-
+    };
+    Action.comparator = function (a, b) {
         return a._priority < b._priority;
-
-    }
-
-    public static isValidAction(action: string): boolean {
-
-        let isValid = false;
-
+    };
+    Action.isValidAction = function (action) {
+        var isValid = false;
         switch (action) {
             case ("attack"):
             case ("defend"):
@@ -68,14 +50,10 @@ export class Action {
                 isValid = false;
                 break;
         }
-
         return isValid;
-    }
-
-
-}
-
-
-
-
-
+    };
+    Action.playerActions = ["attack", "defend", "move", "follow", "rest", "wait"];
+    return Action;
+}());
+exports.Action = Action;
+//# sourceMappingURL=Action.js.map

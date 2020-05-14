@@ -14,8 +14,8 @@
     //  <div></div>
     //</div>
 
-import { action } from '../types/types.js';
-import { Action } from './Action.js';
+import { action } from '../types/types';
+import { Action } from './Action';
 
 export class Player {
 
