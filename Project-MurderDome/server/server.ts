@@ -5,6 +5,7 @@ import path = require('path');
 import testRoute from './routes/testRoute';
 import index from './routes/index';
 import users from './routes/user';
+import classes from './routes/classes';
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(express.static(path.join(__dirname, '../client/public')));
 app.use('/test',testRoute);
 app.use('/index', index);
 app.use('/users', users);
+app.use('/\*/classes/', classes);
 
 app.get('/', (req: express.Request, res: express.Response) => {
     res.sendFile(path.join(app.get('views'), 'testPage.html'));

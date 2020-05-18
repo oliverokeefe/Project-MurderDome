@@ -6,6 +6,7 @@ const path = require("path");
 const testRoute_1 = require("./routes/testRoute");
 const index_1 = require("./routes/index");
 const user_1 = require("./routes/user");
+const classes_1 = require("./routes/classes");
 const app = express();
 // view engine setup
 app.set('views', path.join(__dirname, '../client/views'));
@@ -14,6 +15,7 @@ app.use(express.static(path.join(__dirname, '../client/public')));
 app.use('/test', testRoute_1.default);
 app.use('/index', index_1.default);
 app.use('/users', user_1.default);
+app.use('/\*/classes/', classes_1.default);
 app.get('/', (req, res) => {
     res.sendFile(path.join(app.get('views'), 'testPage.html'));
 });

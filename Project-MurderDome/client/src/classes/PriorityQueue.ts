@@ -1,7 +1,7 @@
 
 
 
-import { comparator } from '../types/types';
+import type { comparator } from '../types/types';
 
 export class PriorityQueue {
 

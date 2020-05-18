@@ -35,6 +35,9 @@
     <None Include="server\routes\index.ts" />
     <None Include="server\routes\user.ts" />
     <Content Include="client\public\javascripts\domReady.js" />
+    <Content Include="client\public\javascripts\main.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="client\public\javascripts\require.js">
       <SubType>Code</SubType>
     </Content>
