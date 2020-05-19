@@ -32,35 +32,21 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="server\server.ts" />
-    <None Include="server\routes\index.ts" />
-    <None Include="server\routes\user.ts" />
-    <Content Include="client\public\javascripts\domReady.js" />
-    <Content Include="client\public\javascripts\main.js">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="client\public\javascripts\require.js">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="client\public\stylesheets\main.css" />
     <Content Include="client\public\stylesheets\testStyle.css" />
+    <Content Include="client\public\views\testPage.html" />
     <Content Include="client\tsconfig.json" />
     <Content Include="server\tsconfig.json" />
     <Content Include="tsconfig.json" />
     <Content Include="package.json" />
     <Content Include="README.md" />
-    <Content Include="client\views\testPage.html">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="client\views\index.pug" />
-    <Content Include="client\views\layout.pug" />
-    <Content Include="client\views\error.pug" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="client\" />
     <Folder Include="client\public\javascripts\" />
     <Folder Include="client\public\stylesheets\" />
+    <Folder Include="client\public\views\" />
     <Folder Include="client\src\scripts\" />
-    <Folder Include="client\src\types\" />
+    <Folder Include="shared\src\types\" />
     <Folder Include="server\" />
     <Folder Include="shared\" />
     <Folder Include="client\src\classes\" />
@@ -68,10 +54,11 @@
     <Folder Include="client\public\" />
     <Folder Include="client\public\images\" />
     <Folder Include="server\routes\" />
-    <Folder Include="client\views\" />
+    <Folder Include="shared\src\" />
+    <Folder Include="shared\src\classes\" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="client\src\classes\Action.ts" />
+    <TypeScriptCompile Include="shared\src\classes\Action.ts" />
     <TypeScriptCompile Include="client\src\classes\PriorityQueue.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -82,7 +69,7 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="client\src\scripts\testScript.ts" />
-    <TypeScriptCompile Include="client\src\types\types.ts" />
+    <TypeScriptCompile Include="shared\src\types\types.ts" />
     <TypeScriptCompile Include="server\routes\scripts.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -91,7 +78,7 @@
     <TypeScriptCompile Include="server\routes\testRoute.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="client\src\classes\Player.ts">
+    <TypeScriptCompile Include="shared\src\classes\Player.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
   </ItemGroup>

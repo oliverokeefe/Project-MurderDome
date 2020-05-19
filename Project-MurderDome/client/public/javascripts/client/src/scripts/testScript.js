@@ -1,9 +1,17 @@
-import { Player } from '../classes/Player';
-import { Action } from '../classes/Action';
-import { PriorityQueue } from '../classes/PriorityQueue';
+//Make sure the page has a socket.io script this tag before this
+//<script src="/socket.io/socket.io.js" > </script>
+import { Player } from '../../../shared/src/classes/Player.js';
+import { Action } from '../../../shared/src/classes/Action.js';
+import { PriorityQueue } from '../classes/PriorityQueue.js';
+let socket = undefined;
 let players = [];
 let enterBtn;
 let output;
+function outputMsg(msg) {
+    output.innerHTML = msg;
+}
+function testHandler() {
+}
 function enterBtnClickHandler() {
     let actionList = new PriorityQueue(Action.comparator);
     console.log(JSON.parse(JSON.stringify(actionList)));
@@ -17,7 +25,7 @@ function enterBtnClickHandler() {
         console.log(curAction);
         actionLog += curAction.owner + ": " + curAction.action + "<br/>";
     }
-    output.innerHTML = actionLog;
+    socket.emit('EnterBtnClicked', actionLog);
 }
 function createPlayers() {
     players.push(new Player(document.getElementById("Player1"), "Player1"));
@@ -26,8 +34,6 @@ function createPlayers() {
     players.push(new Player(document.getElementById("Player4"), "Player4"));
     players.push(new Player(document.getElementById("Player5"), "Player5"));
     players.push(new Player(document.getElementById("Player6"), "Player6"));
-    //players.push(new Player(document.getElementById("Player7") as HTMLDivElement, "Player7"));
-    //players.push(new Player(document.getElementById("Player8") as HTMLDivElement, "Player8"));
     return;
 }
 function setUpEnterBtn() {
@@ -36,15 +42,20 @@ function setUpEnterBtn() {
     enterBtn.addEventListener("click", enterBtnClickHandler);
     return;
 }
+function setUpSocket() {
+    socket = io();
+    socket.on('Output', outputMsg);
+}
 function init() {
     createPlayers();
     setUpEnterBtn();
+    setUpSocket();
     return;
 }
-//window.onload = function () {
-//    init();
-//    return;
-//};
+window.onload = function () {
+    init();
+    return;
+};
 //require(['../../public/javascripts/domReady!'], function (doc) {
 //    //This function is called once the DOM is ready,
 //    //notice the value for 'domReady!' is the current

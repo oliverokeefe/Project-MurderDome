@@ -1,12 +1,27 @@
 
-import { Player } from '../classes/Player';
-import { Action } from '../classes/Action';
-import { PriorityQueue } from '../classes/PriorityQueue';
+//Make sure the page has a socket.io script this tag before this
+//<script src="/socket.io/socket.io.js" > </script>
+
+import { Player } from '../../../shared/src/classes/Player.js';
+import { Action } from '../../../shared/src/classes/Action.js';
+import { PriorityQueue } from '../classes/PriorityQueue.js';
+
+let socket: SocketIOClient.Socket = undefined;
 
 let players: Player[] = [];
 
 let enterBtn: HTMLButtonElement;
 let output: HTMLDivElement;
+
+
+function outputMsg(msg: string) {
+
+    output.innerHTML = msg;
+}
+
+function testHandler() {
+
+}
 
 function enterBtnClickHandler() {
 
@@ -27,8 +42,7 @@ function enterBtnClickHandler() {
     }
 
 
-    output.innerHTML = actionLog;
-
+    socket.emit('EnterBtnClicked', actionLog);
 }
 
 function createPlayers() {
@@ -39,8 +53,6 @@ function createPlayers() {
     players.push(new Player(document.getElementById("Player4") as HTMLDivElement, "Player4"));
     players.push(new Player(document.getElementById("Player5") as HTMLDivElement, "Player5"));
     players.push(new Player(document.getElementById("Player6") as HTMLDivElement, "Player6"));
-    //players.push(new Player(document.getElementById("Player7") as HTMLDivElement, "Player7"));
-    //players.push(new Player(document.getElementById("Player8") as HTMLDivElement, "Player8"));
 
     return;
 }
@@ -55,9 +67,16 @@ function setUpEnterBtn() {
     return;
 }
 
+function setUpSocket() {
+    socket = io();
+    socket.on('Output', outputMsg);
+
+}
+
 function init() {
     createPlayers();
     setUpEnterBtn();
+    setUpSocket();
 
     return;
 }
