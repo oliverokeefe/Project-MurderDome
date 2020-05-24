@@ -32,7 +32,9 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="server\server.ts" />
+    <Content Include="client\public\stylesheets\devStyle.css" />
     <Content Include="client\public\stylesheets\testStyle.css" />
+    <Content Include="client\public\views\devPage.html" />
     <Content Include="client\public\views\testPage.html" />
     <Content Include="client\tsconfig.json" />
     <Content Include="server\tsconfig.json" />
@@ -58,6 +60,8 @@
     <Folder Include="shared\src\classes\" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="client\src\classes\devPlayerControl.ts" />
+    <TypeScriptCompile Include="client\src\scripts\devScript.ts" />
     <TypeScriptCompile Include="shared\src\classes\Action.ts" />
     <TypeScriptCompile Include="client\src\classes\PriorityQueue.ts">
       <SubType>Code</SubType>
