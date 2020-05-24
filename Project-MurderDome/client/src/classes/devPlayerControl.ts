@@ -65,7 +65,7 @@ export class Player {
         this.playerId = id;
         this.allPlayerIds = allPlayerIds;
 
-        this._container = document.createElement("div");
+        this._container = this._createContainerDiv("PlayerControlContainerCore");
         this._populateElements();
         this._addElementsToContainer();
         this.parentElement.appendChild(this._container);
@@ -127,6 +127,16 @@ export class Player {
         return numberInput;
     }
 
+    private _createContainerDiv(...classes: string[]): HTMLDivElement {
+        let containerDiv: HTMLDivElement = document.createElement('div');
+
+        classes.forEach((className) => {
+            containerDiv.classList.add(className);
+        });
+
+        return containerDiv;
+    }
+
 
 
     /*
@@ -181,62 +191,100 @@ export class Player {
      */
 
     private _addElementsToContainer(): void {
-        this._addNameToContainer();
-        this._addStatsToContainer();
-        this._addDerivedStatsToContainer();
-        this._addActionModToContainer();
-        this._addActionSelectToContainer();
-        this._addTargetSelectToContainer();
+        this._addNameSection();
+        this._addStatsSection();
+        this._addDerivedStatsSection();
+        this._addActionSection();
     }
 
-    private _addNameToContainer(): void {
-        this._container.appendChild(this._playerNameElement);
+    private _addNameSection(): void {
+
+        let nameSection = this._createContainerDiv("PlayerName", "Section");
+        let nameInputCon = this._createContainerDiv("InputContainer");
+        nameInputCon.appendChild(this._playerNameElement);
+        nameSection.appendChild(nameInputCon);
+        this._container.appendChild(nameSection);
     }
 
-    private _addStatsToContainer(): void {
-        this._container.appendChild(this._createLabel(this.strLabel));
-        this._container.appendChild(this._strElememt);
+    private _addStatsSection(): void {
 
-        this._container.appendChild(this._createLabel(this.dexLabel));
-        this._container.appendChild(this._dexElement);
+        let statSection = this._createContainerDiv("PlayerStats", "Section")
 
-        this._container.appendChild(this._createLabel(this.conLabel));
-        this._container.appendChild(this._conElement);
+        let strInputCon = this._createContainerDiv("InputContainer");
+        strInputCon.appendChild(this._createLabel(this.strLabel));
+        strInputCon.appendChild(this._strElememt);
+        statSection.appendChild(strInputCon);
 
-        this._container.appendChild(this._createLabel(this.intLabel));
-        this._container.appendChild(this._intElement);
+        let dexInputCon = this._createContainerDiv("InputContainer");
+        dexInputCon.appendChild(this._createLabel(this.dexLabel));
+        dexInputCon.appendChild(this._dexElement);
+        statSection.appendChild(dexInputCon);
 
-        this._container.appendChild(this._createLabel(this.wisLabel));
-        this._container.appendChild(this._wisElement);
+        let conInputCon = this._createContainerDiv("InputContainer");
+        conInputCon.appendChild(this._createLabel(this.conLabel));
+        conInputCon.appendChild(this._conElement);
+        statSection.appendChild(conInputCon);
 
-        this._container.appendChild(this._createLabel(this.chaLabel));
-        this._container.appendChild(this._chaElement);
+        let intInputCon = this._createContainerDiv("InputContainer");
+        intInputCon.appendChild(this._createLabel(this.intLabel));
+        intInputCon.appendChild(this._intElement);
+        statSection.appendChild(intInputCon);
+
+        let wisInputCon = this._createContainerDiv("InputContainer");
+        wisInputCon.appendChild(this._createLabel(this.wisLabel));
+        wisInputCon.appendChild(this._wisElement);
+        statSection.appendChild(wisInputCon);
+
+        let chaInputCon = this._createContainerDiv("InputContainer");
+        chaInputCon.appendChild(this._createLabel(this.chaLabel));
+        chaInputCon.appendChild(this._chaElement);
+        statSection.appendChild(chaInputCon);
+
+        this._container.appendChild(statSection);
     }
 
-    private _addDerivedStatsToContainer(): void {
-        this._container.appendChild(this._createLabel(this.hpLabel));
-        this._container.appendChild(this._hpElement);
+    private _addDerivedStatsSection(): void {
 
-        this._container.appendChild(this._createLabel(this.sanLabel));
-        this._container.appendChild(this._sanElement);
+        let derivedStatSection = this._createContainerDiv("PlayerDerivedStats", "Section")
 
-        this._container.appendChild(this._createLabel(this.staLabel));
-        this._container.appendChild(this._staElement);
+        let hpInputCon = this._createContainerDiv("InputContainer");
+        hpInputCon.appendChild(this._createLabel(this.hpLabel));
+        hpInputCon.appendChild(this._hpElement);
+        derivedStatSection.appendChild(hpInputCon);
+
+        let sanInputCon = this._createContainerDiv("InputContainer");
+        sanInputCon.appendChild(this._createLabel(this.sanLabel));
+        sanInputCon.appendChild(this._sanElement);
+        derivedStatSection.appendChild(sanInputCon);
+
+        let staInputCon = this._createContainerDiv("InputContainer");
+        staInputCon.appendChild(this._createLabel(this.staLabel));
+        staInputCon.appendChild(this._staElement);
+        derivedStatSection.appendChild(staInputCon);
+
+        this._container.appendChild(derivedStatSection);
     }
 
-    private _addActionModToContainer(): void {
-        this._container.appendChild(this._createLabel(this.actionModLabel));
-        this._container.appendChild(this._actionModElement);
-    }
+    private _addActionSection(): void {
 
-    private _addActionSelectToContainer(): void {
-        this._container.appendChild(this._createLabel(this.actionSelectLabel));
-        this._container.appendChild(this._actionSelectElement);
-    }
+        let actionSection = this._createContainerDiv("PlayerAction", "Section");
 
-    private _addTargetSelectToContainer(): void {
-        this._container.appendChild(this._createLabel(this.targetSelectLabel));
-        this._container.appendChild(this._targetSelectElement);
+        let actionModInputCon = this._createContainerDiv("InputContainer");
+        actionModInputCon.appendChild(this._createLabel(this.actionModLabel));
+        actionModInputCon.appendChild(this._actionModElement);
+        actionSection.appendChild(actionModInputCon);
+
+        let actionSelectCon = this._createContainerDiv("InputContainer");
+        actionSelectCon.appendChild(this._createLabel(this.actionSelectLabel));
+        actionSelectCon.appendChild(this._actionSelectElement);
+        actionSection.appendChild(actionSelectCon);
+
+        let targetSelectCon = this._createContainerDiv("InputContainer");
+        targetSelectCon.appendChild(this._createLabel(this.targetSelectLabel));
+        targetSelectCon.appendChild(this._targetSelectElement);
+        actionSection.appendChild(targetSelectCon);
+
+        this._container.appendChild(actionSection);
     }
 
     public constructAction(): Action {

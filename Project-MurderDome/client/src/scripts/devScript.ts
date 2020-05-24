@@ -9,18 +9,18 @@ let players: Player[] = [];
 
 function CreatePlayersBtnClickHandler() {
 
-    console.log(PlayerAmtElement.value);
-
     for (let i = 0; i < +PlayerAmtElement.value; i++) {
         allPlayerIds.push(i+"");
     }
 
     let container: HTMLDivElement = document.createElement('div');
+    container.classList.add("PlayersContainerCore");
 
     allPlayerIds.forEach(function (playerId) {
-        let playerContainer: HTMLDivElement = document.createElement('div');
-        players.push(new Player(playerContainer, playerId, allPlayerIds));
-        container.appendChild(playerContainer);
+        let playerDiv: HTMLDivElement = document.createElement('div');
+        playerDiv.classList.add("PlayerControlContainer");
+        players.push(new Player(playerDiv, playerId, allPlayerIds));
+        container.appendChild(playerDiv);
     });
 
     PlayersContainer.appendChild(container);
