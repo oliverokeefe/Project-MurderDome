@@ -21,8 +21,7 @@
     "path": "^0.12.7",
     "pug": "^2.0.0-rc.3",
     "socket.io": "^2.3.0",
-    "text": "^0.1.0",
-    "tsc": "^1.20150623.0"
+    "text": "^0.1.0"
   },
   "devDependencies": {
     "@types/debug": "0.0.30",
@@ -32,6 +31,6 @@
     "@types/node": "^8.0.14",
     "@types/serve-static": "^1.7.32",
     "parcel-bundler": "^1.12.4",
-    "typescript": "^3.9.0-beta"
+    "typescript": "^3.9.3"
   }
 }
