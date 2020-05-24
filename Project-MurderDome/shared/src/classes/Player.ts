@@ -1,100 +1,96 @@
 
-import type { action } from '../types/types';
+import type { action, stats, vitals } from '../types/types';
+import { PlayerControl } from '../../../client/src/classes/devPlayerControl.js';
 import { Action } from './Action.js';
 
 export class Player {
 
-    readonly parent: HTMLDivElement;
-    readonly name: string;
+    static readonly STARTINGVITALS: vitals = {
+        hp: 100,
+        san: 70,
+        sta: 50
+    };
+    static readonly DEFAULTSTATS: stats = {
+        str: 13,
+        dex: 13,
+        con: 12,
+        int: 12,
+        wis: 11,
+        cha: 11
+    };
+    static readonly DEFAULTMODIFIER: number = 0;
 
-    private _container: HTMLDivElement;
-    private _selectElement: HTMLSelectElement;
-    private _changeEventHandler: EventListener;
-    private _selectedAction: Action;
 
-    constructor(parentElement: HTMLDivElement, playerName: string) {
+    private _playerId: string;
+    private _playerName: string;
+    private _vitals: vitals;
+    private _stats: stats;
+    private _action: Action;
 
-        this.parent = parentElement;
-        this.name = playerName;
 
-        this.parent.classList.add("PlayerControl");
 
-        this._container = document.createElement("div");
-        this._container.classList.add("PlayerContainer");
+    constructor(playerId: string, playerName: string, stats: stats) {
 
-        this._container.appendChild(this._createLabel());
-        this._container.appendChild(this._createSelect());
-
-        this.parent.appendChild(this._container);
+        this._playerId = playerId;
+        this._playerName = playerName;
+        this._stats = stats;
 
         return
     }
 
-
-    private _createLabel(): HTMLLabelElement {
-
-        let label: HTMLLabelElement = document.createElement('label');
-        label.classList.add("PlayerLabel");
-        label.setAttribute('for', this.name);
-        label.innerText = this.name;
-
-        return label;
+    public takeDmg(damage: number) {
+        this._vitals.hp = (this._vitals.hp - damage <= 0) ? 0 : this._vitals.hp - damage;
     }
 
-    private _createSelect(): HTMLSelectElement {
-
-        let select: HTMLSelectElement = document.createElement('select');
-        select.setAttribute('name', this.name);
-
-        Action.playerActions.forEach((action) => {
-            select.appendChild(this._createOption(action));
-        });
-
-        this._selectElement = select;
-        this._changeEventHandler = () => { this._setSelectedAction(); };
-        this._selectElement.addEventListener("change", this._changeEventHandler);
-        this._setSelectedAction();
-
-        return select;
+    public getName(): string {
+        return this._playerName;
     }
 
-    private _createOption(action: string): HTMLOptionElement {
-
-        let option: HTMLOptionElement = document.createElement('option');
-        option.setAttribute('value', action);
-        option.innerText = action;
-
-        return option;
+    public getNameTag(): string {
+        return "[" + this._playerId + "] " + this.getName();
     }
 
-    private _setSelectedAction(): void {
+    public getVitals(): vitals {
+        return this._vitals;
+    }
 
-        if (this._selectElement && this._selectElement.selectedIndex != -1 && this._selectElement.options.length > 0) {
+    public getStats(): stats {
+        return this._stats;
+    }
 
-            let selectedOption: HTMLOptionElement = this._selectElement.options.item(this._selectElement.selectedIndex);
+    public getAction(): Action {
+        return this._action;
+    }
 
-            if (Action.isValidAction(selectedOption.value)) {
-                this._selectedAction = new Action(selectedOption.value as action, this.name);
-            } else {
-                this._selectedAction = undefined;
-            }
+    public set_playerName(name: string) {
+        this._playerName = name;
+    }
+
+    public set_vitals(vitals: vitals) {
+        this._vitals = vitals;
+    }
+
+    public set_stats(stats: stats): void {
+        this._stats = stats;
+    }
+
+    public setAction(action: action, target: number, modifier: number): void {
+
+        if (Action.isValidAction(action)) {
+            this._action = new Action(action, this._playerId, target, modifier);
+        } else {
+            this._action = undefined;
         }
-        return
+
+        return;
     }
 
-    //private _attachChangeEventHandler(): void {
-    //    if (this._selectElement && this._changeEventHandler) {
-    //        this._selectElement.addEventListener("change", this._changeEventHandler);
-    //    }
-    //}
-
-    //private _detachChangeEventHandler(): void {
-    //    if (this._selectElement && this._changeEventHandler) {
-    //        this._selectElement.removeEventListener("change", this._changeEventHandler);
-    //    }
-    //}
-
-    public getSelectedAction(): Action {
-        return this._selectedAction;
+    /**
+     * This is for testing, needs to be removed/changed for production
+     */
+    public updatePlayer(name: string, vitals: vitals, stats: stats): void {
+        this.set_playerName(name);
+        this.set_vitals(vitals);
+        this.set_stats(stats);
     }
 }

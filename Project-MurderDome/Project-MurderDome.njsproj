@@ -62,6 +62,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="client\src\classes\devPlayerControl.ts" />
     <TypeScriptCompile Include="client\src\scripts\devScript.ts" />
+    <TypeScriptCompile Include="shared\src\classes\testAction.ts" />
     <TypeScriptCompile Include="shared\src\classes\Action.ts" />
     <TypeScriptCompile Include="client\src\classes\PriorityQueue.ts">
       <SubType>Code</SubType>
@@ -73,6 +74,7 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="client\src\scripts\testScript.ts" />
+    <TypeScriptCompile Include="shared\src\classes\testPlayer.ts" />
     <TypeScriptCompile Include="shared\src\types\types.ts" />
     <TypeScriptCompile Include="server\routes\scripts.ts">
       <SubType>Code</SubType>

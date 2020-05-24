@@ -1,7 +1,7 @@
 //Make sure the page has a socket.io script this tag before this
 //<script src="/socket.io/socket.io.js" > </script>
-import { Player } from '../../../shared/src/classes/Player.js';
-import { Action } from '../../../shared/src/classes/Action.js';
+import { testPlayer } from '../../../shared/src/classes/testPlayer.js';
+import { testAction } from '../../../shared/src/classes/testAction.js';
 import { PriorityQueue } from '../classes/PriorityQueue.js';
 let socket = undefined;
 let players = [];
@@ -13,7 +13,7 @@ function outputMsg(msg) {
 function testHandler() {
 }
 function enterBtnClickHandler() {
-    let actionList = new PriorityQueue(Action.comparator);
+    let actionList = new PriorityQueue(testAction.comparator);
     console.log(JSON.parse(JSON.stringify(actionList)));
     players.forEach(function (player, index) {
         actionList.push(player.getSelectedAction());
@@ -28,12 +28,12 @@ function enterBtnClickHandler() {
     socket.emit('EnterBtnClicked', actionLog);
 }
 function createPlayers() {
-    players.push(new Player(document.getElementById("Player1"), "Player1"));
-    players.push(new Player(document.getElementById("Player2"), "Player2"));
-    players.push(new Player(document.getElementById("Player3"), "Player3"));
-    players.push(new Player(document.getElementById("Player4"), "Player4"));
-    players.push(new Player(document.getElementById("Player5"), "Player5"));
-    players.push(new Player(document.getElementById("Player6"), "Player6"));
+    players.push(new testPlayer(document.getElementById("Player1"), "Player1"));
+    players.push(new testPlayer(document.getElementById("Player2"), "Player2"));
+    players.push(new testPlayer(document.getElementById("Player3"), "Player3"));
+    players.push(new testPlayer(document.getElementById("Player4"), "Player4"));
+    players.push(new testPlayer(document.getElementById("Player5"), "Player5"));
+    players.push(new testPlayer(document.getElementById("Player6"), "Player6"));
     return;
 }
 function setUpEnterBtn() {
@@ -56,10 +56,4 @@ window.onload = function () {
     init();
     return;
 };
-//require(['../../public/javascripts/domReady!'], function (doc) {
-//    //This function is called once the DOM is ready,
-//    //notice the value for 'domReady!' is the current
-//    //document.
-//    init()
-//});
 //# sourceMappingURL=testScript.js.map

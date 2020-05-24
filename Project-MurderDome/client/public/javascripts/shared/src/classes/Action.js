@@ -1,57 +1,37 @@
 let Action = /** @class */ (() => {
     class Action {
-        constructor(action, doer) {
-            this.owner = doer;
+        constructor(action, ownerId, target, modifier) {
+            this.ownerId = ownerId;
+            this.mod = modifier;
             this.action = action;
+            this.target = target;
             this._setPriorityFromAction();
         }
         _setPriorityFromAction() {
-            switch (this.action) {
-                case ("attack"):
-                    this._priority = 1;
-                    break;
-                case ("defend"):
-                    this._priority = 2;
-                    break;
-                case ("move"):
-                    this._priority = 3;
-                    break;
-                case ("follow"):
-                    this._priority = 4;
-                    break;
-                case ("rest"):
-                    this._priority = 5;
-                    break;
-                case ("wait"):
-                    this._priority = 6;
-                    break;
-                default:
-                    this._priority = 1000;
-                    break;
+            if (Action.isValidAction(this.action)) {
+                this._priority = Action.PLAYERACTIONS[this.action].priority;
+            }
+            else {
+                this._priority = 1000;
             }
         }
         static comparator(a, b) {
             return a._priority < b._priority;
         }
         static isValidAction(action) {
-            let isValid = false;
-            switch (action) {
-                case ("attack"):
-                case ("defend"):
-                case ("move"):
-                case ("follow"):
-                case ("rest"):
-                case ("wait"):
-                    isValid = true;
-                    break;
-                default:
-                    isValid = false;
-                    break;
-            }
-            return isValid;
+            return Action.PLAYERACTIONS.hasOwnProperty(action);
+        }
+        static resolve(action) {
         }
     }
-    Action.playerActions = ["attack", "defend", "move", "follow", "rest", "wait"];
+    Action.PLAYERACTIONS = {
+        attack: { name: "attack", priority: 1, },
+        defend: { name: "defend", priority: 2 },
+        move: { name: "move", priority: 3 },
+        follow: { name: "follow", priority: 4 },
+        rest: { name: "rest", priority: 5 },
+        wait: { name: "wait", priority: 6 }
+    };
     return Action;
 })();
 export { Action };

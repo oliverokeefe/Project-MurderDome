@@ -1,65 +1,72 @@
 import { Action } from './Action.js';
-export class Player {
-    constructor(parentElement, playerName) {
-        this.parent = parentElement;
-        this.name = playerName;
-        this.parent.classList.add("PlayerControl");
-        this._container = document.createElement("div");
-        this._container.classList.add("PlayerContainer");
-        this._container.appendChild(this._createLabel());
-        this._container.appendChild(this._createSelect());
-        this.parent.appendChild(this._container);
-        return;
-    }
-    _createLabel() {
-        let label = document.createElement('label');
-        label.classList.add("PlayerLabel");
-        label.setAttribute('for', this.name);
-        label.innerText = this.name;
-        return label;
-    }
-    _createSelect() {
-        let select = document.createElement('select');
-        select.setAttribute('name', this.name);
-        Action.playerActions.forEach((action) => {
-            select.appendChild(this._createOption(action));
-        });
-        this._selectElement = select;
-        this._changeEventHandler = () => { this._setSelectedAction(); };
-        this._selectElement.addEventListener("change", this._changeEventHandler);
-        this._setSelectedAction();
-        return select;
-    }
-    _createOption(action) {
-        let option = document.createElement('option');
-        option.setAttribute('value', action);
-        option.innerText = action;
-        return option;
-    }
-    _setSelectedAction() {
-        if (this._selectElement && this._selectElement.selectedIndex != -1 && this._selectElement.options.length > 0) {
-            let selectedOption = this._selectElement.options.item(this._selectElement.selectedIndex);
-            if (Action.isValidAction(selectedOption.value)) {
-                this._selectedAction = new Action(selectedOption.value, this.name);
+let Player = /** @class */ (() => {
+    class Player {
+        constructor(playerId, playerName, stats) {
+            this._playerId = playerId;
+            this._playerName = playerName;
+            this._stats = stats;
+            return;
+        }
+        takeDmg(damage) {
+            this._vitals.hp = (this._vitals.hp - damage <= 0) ? 0 : this._vitals.hp - damage;
+        }
+        getName() {
+            return this._playerName;
+        }
+        getNameTag() {
+            return "[" + this._playerId + "] " + this.getName();
+        }
+        getVitals() {
+            return this._vitals;
+        }
+        getStats() {
+            return this._stats;
+        }
+        getAction() {
+            return this._action;
+        }
+        set_playerName(name) {
+            this._playerName = name;
+        }
+        set_vitals(vitals) {
+            this._vitals = vitals;
+        }
+        set_stats(stats) {
+            this._stats = stats;
+        }
+        setAction(action, target, modifier) {
+            if (Action.isValidAction(action)) {
+                this._action = new Action(action, this._playerId, target, modifier);
             }
             else {
-                this._selectedAction = undefined;
+                this._action = undefined;
             }
+            return;
         }
-        return;
+        /**
+         * This is for testing, needs to be removed/changed for production
+         */
+        updatePlayer(name, vitals, stats) {
+            this.set_playerName(name);
+            this.set_vitals(vitals);
+            this.set_stats(stats);
+        }
     }
-    //private _attachChangeEventHandler(): void {
-    //    if (this._selectElement && this._changeEventHandler) {
-    //        this._selectElement.addEventListener("change", this._changeEventHandler);
-    //    }
-    //}
-    //private _detachChangeEventHandler(): void {
-    //    if (this._selectElement && this._changeEventHandler) {
-    //        this._selectElement.removeEventListener("change", this._changeEventHandler);
-    //    }
-    //}
-    getSelectedAction() {
-        return this._selectedAction;
-    }
-}
+    Player.STARTINGVITALS = {
+        hp: 100,
+        san: 70,
+        sta: 50
+    };
+    Player.DEFAULTSTATS = {
+        str: 13,
+        dex: 13,
+        con: 12,
+        int: 12,
+        wis: 11,
+        cha: 11
+    };
+    Player.DEFAULTMODIFIER = 0;
+    return Player;
+})();
+export { Player };
 //# sourceMappingURL=Player.js.map

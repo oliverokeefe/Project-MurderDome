@@ -2,13 +2,13 @@
 //Make sure the page has a socket.io script this tag before this
 //<script src="/socket.io/socket.io.js" > </script>
 
-import { Player } from '../../../shared/src/classes/Player.js';
-import { Action } from '../../../shared/src/classes/Action.js';
+import { testPlayer } from '../../../shared/src/classes/testPlayer.js';
+import { testAction } from '../../../shared/src/classes/testAction.js';
 import { PriorityQueue } from '../classes/PriorityQueue.js';
 
 let socket: SocketIOClient.Socket = undefined;
 
-let players: Player[] = [];
+let players: testPlayer[] = [];
 
 let enterBtn: HTMLButtonElement;
 let output: HTMLDivElement;
@@ -25,7 +25,7 @@ function testHandler() {
 
 function enterBtnClickHandler() {
 
-    let actionList: PriorityQueue = new PriorityQueue(Action.comparator);
+    let actionList: PriorityQueue = new PriorityQueue(testAction.comparator);
 
     console.log(JSON.parse(JSON.stringify(actionList)))
     players.forEach(function (player, index) {
@@ -36,7 +36,7 @@ function enterBtnClickHandler() {
     let actionLog: string = "";
     while (!actionList.isEmpty()) {
 
-        let curAction: Action = actionList.pop();
+        let curAction: testAction = actionList.pop();
         console.log(curAction);
         actionLog += curAction.owner + ": " + curAction.action + "<br/>";
     }
@@ -47,12 +47,12 @@ function enterBtnClickHandler() {
 
 function createPlayers() {
 
-    players.push(new Player(document.getElementById("Player1") as HTMLDivElement, "Player1"));
-    players.push(new Player(document.getElementById("Player2") as HTMLDivElement, "Player2"));
-    players.push(new Player(document.getElementById("Player3") as HTMLDivElement, "Player3"));
-    players.push(new Player(document.getElementById("Player4") as HTMLDivElement, "Player4"));
-    players.push(new Player(document.getElementById("Player5") as HTMLDivElement, "Player5"));
-    players.push(new Player(document.getElementById("Player6") as HTMLDivElement, "Player6"));
+    players.push(new testPlayer(document.getElementById("Player1") as HTMLDivElement, "Player1"));
+    players.push(new testPlayer(document.getElementById("Player2") as HTMLDivElement, "Player2"));
+    players.push(new testPlayer(document.getElementById("Player3") as HTMLDivElement, "Player3"));
+    players.push(new testPlayer(document.getElementById("Player4") as HTMLDivElement, "Player4"));
+    players.push(new testPlayer(document.getElementById("Player5") as HTMLDivElement, "Player5"));
+    players.push(new testPlayer(document.getElementById("Player6") as HTMLDivElement, "Player6"));
 
     return;
 }
@@ -86,16 +86,5 @@ window.onload = function () {
 
     return;
 };
-
-//require(['../../public/javascripts/domReady!'], function (doc) {
-//    //This function is called once the DOM is ready,
-//    //notice the value for 'domReady!' is the current
-//    //document.
-
-//    init()
-//});
-
-
-
 
 
