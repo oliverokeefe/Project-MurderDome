@@ -78,20 +78,20 @@ function resolveActions(): string {
 function resolveAction(action: Action): string {
 
     let log: string = "";
-    log = "+" + playerControls[+action.ownerId].player.getNameTag() + ": " + action.action + "<br/>";
+    //log = "+" + playerControls[+action.ownerId].player.getNameTag() + ": " + action.action + "<br/>";
 
-    if (action.action === Action.PLAYERACTIONS.attack.name) {
-        log += "+++ if(" + playerControls[+action.target].player.getName() + " attack-response roll exists&fails)<br/>";
-        log += "+++++ if(" + playerControls[+action.ownerId].player.getName() + " attack roll succeed)<br/>";
-        log += "+++++++ " + playerControls[+action.ownerId].player.getName() + " damage roll<br/>";
-        log += "+++++++ " + playerControls[+action.target].player.getName() + " take damage<br/>";
-    }
-
-
+    //if (action.action === Action.PLAYERACTIONS.attack) {
+    //    log += "+++ if(" + playerControls[+action.target].player.getName() + " attack-response roll exists&fails)<br/>";
+    //    log += "+++++ if(" + playerControls[+action.ownerId].player.getName() + " attack roll succeed)<br/>";
+    //    log += "+++++++ " + playerControls[+action.ownerId].player.getName() + " damage roll<br/>";
+    //    log += "+++++++ " + playerControls[+action.target].player.getName() + " take damage<br/>";
+    //}
 
 
-    playerControls[+action.ownerId].updateControlWithPlayerData();
-    playerControls[+action.target].updateControlWithPlayerData();
+
+
+    //playerControls[+action.ownerId].updateControlWithPlayerData();
+    //playerControls[+action.target].updateControlWithPlayerData();
     return log;
 }
 

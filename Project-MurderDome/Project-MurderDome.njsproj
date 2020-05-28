@@ -62,6 +62,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="client\src\classes\devPlayerControl.ts" />
     <TypeScriptCompile Include="client\src\scripts\devScript.ts" />
+    <TypeScriptCompile Include="shared\src\classes\AttackAction.ts" />
     <TypeScriptCompile Include="shared\src\classes\testAction.ts" />
     <TypeScriptCompile Include="shared\src\classes\Action.ts" />
     <TypeScriptCompile Include="client\src\classes\PriorityQueue.ts">

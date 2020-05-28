@@ -1,4 +1,5 @@
 import { Action } from './Action.js';
+import { AttackAction } from './AttackAction.js';
 let Player = /** @class */ (() => {
     class Player {
         constructor(playerId, playerName, stats) {
@@ -36,7 +37,10 @@ let Player = /** @class */ (() => {
         }
         setAction(action, target, modifier) {
             if (Action.isValidAction(action)) {
-                this._action = new Action(action, this._playerId, target, modifier);
+                if (action === Action.PLAYERACTIONS.attack) {
+                    this._action = new AttackAction(this, target, modifier);
+                }
+                //this._action = new Action(action, this._playerId, target, modifier);
             }
             else {
                 this._action = undefined;

@@ -1,56 +1,48 @@
 
 import type { action } from '../types/types';
+import { Player } from './Player.js';
 
-export class Action {
+export abstract class Action {
 
     static readonly PLAYERACTIONS = {
-        attack: { name: "attack", priority: 1, },
-        defend: { name: "defend", priority: 2 },
-        move: { name: "move", priority: 3 },
-        follow: { name: "follow", priority: 4 },
-        rest: { name: "rest", priority: 5 },
-        wait: { name: "wait", priority: 6 }
+        attack: "attack",
+        defend: "defend",
+        move: "move",
+        follow: "follow",
+        rest: "rest",
+        wait: "wait"
     };
 
-    readonly ownerId: string;
-    readonly mod: number;
-    readonly action: string;
-    readonly target: number;
 
-    private _priority: number;
+    protected abstract _priority: number;
 
-    constructor(action: action, ownerId: string, target: number, modifier: number) {
-        this.ownerId = ownerId;
+
+    //public readonly ownerId: string;
+    public readonly owner: Player;
+    public readonly mod: number;
+    public readonly target: number;
+
+    public abstract readonly action: string = "";
+
+
+    constructor(owner: Player, target: number, modifier: number) {
+        this.owner = owner;
         this.mod = modifier;
-        this.action = action;
         this.target = target;
-
-        this._setPriorityFromAction();
     }
 
-    private _setPriorityFromAction() {
-
-        if (Action.isValidAction(this.action)) {
-            this._priority = Action.PLAYERACTIONS[this.action].priority;
-        } else {
-            this._priority = 1000;
-        }
-
-    }
-
-
-    public static comparator(a: Action, b: Action): boolean {
+    static comparator(a: Action, b: Action): boolean {
 
         return a._priority < b._priority;
 
     }
 
-    public static isValidAction(action: string): boolean {
+    static isValidAction(action: string): boolean {
         return (Action.PLAYERACTIONS as Object).hasOwnProperty(action);
     }
 
-    public static resolve(action: Action): void {
-
+    public resolve(): void {
+        return;
     }
 
 

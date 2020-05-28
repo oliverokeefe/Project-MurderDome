@@ -2,6 +2,7 @@
 import type { action, stats, vitals } from '../types/types';
 import { PlayerControl } from '../../../client/src/classes/devPlayerControl.js';
 import { Action } from './Action.js';
+import { AttackAction } from './AttackAction.js'
 
 export class Player {
 
@@ -77,7 +78,10 @@ export class Player {
     public setAction(action: action, target: number, modifier: number): void {
 
         if (Action.isValidAction(action)) {
-            this._action = new Action(action, this._playerId, target, modifier);
+            if (action === Action.PLAYERACTIONS.attack) {
+                this._action = new AttackAction(this, target, modifier);
+            }
+            //this._action = new Action(action, this._playerId, target, modifier);
         } else {
             this._action = undefined;
         }
