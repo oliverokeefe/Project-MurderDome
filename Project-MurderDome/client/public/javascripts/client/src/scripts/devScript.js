@@ -1,5 +1,5 @@
 import { PlayerControl } from '../classes/devPlayerControl.js';
-import { Action } from '../../../shared/src/classes/Action.js';
+import { Action } from '../../../shared/src/classes/Actions.js';
 import { PriorityQueue } from '../classes/PriorityQueue.js';
 let PlayerAmtElement = undefined;
 let CreatePlayersBtn = undefined;
@@ -40,29 +40,33 @@ function displayLog(log) {
 function resolveActions() {
     let log = "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++<br/>";
     playerControls.forEach((playerControl) => {
-        let action = playerControl.player.getAction();
+        //let action: Action = playerControl.player.getAction();
+        let action = Action.buildAction(playerControl.player);
         if (action) {
             actions.push(action);
         }
     });
     while (!actions.isEmpty()) {
         let action = actions.pop();
-        log += resolveAction(action) + "<br/>";
+        if (action) {
+            log += resolveAction(action) + "<br/>";
+        }
     }
     log += "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++<br/>";
     return log;
 }
 function resolveAction(action) {
     let log = "";
-    //log = "+" + playerControls[+action.ownerId].player.getNameTag() + ": " + action.action + "<br/>";
+    //log = "+" + action.owner.getNameTag() + ": " + action.action + "<br/>";
+    log += action.resolve();
     //if (action.action === Action.PLAYERACTIONS.attack) {
     //    log += "+++ if(" + playerControls[+action.target].player.getName() + " attack-response roll exists&fails)<br/>";
-    //    log += "+++++ if(" + playerControls[+action.ownerId].player.getName() + " attack roll succeed)<br/>";
-    //    log += "+++++++ " + playerControls[+action.ownerId].player.getName() + " damage roll<br/>";
+    //    log += "+++++ if(" + action.owner.getName() + " attack roll succeed)<br/>";
+    //    log += "+++++++ " + action.owner.getName() + " damage roll<br/>";
     //    log += "+++++++ " + playerControls[+action.target].player.getName() + " take damage<br/>";
     //}
-    //playerControls[+action.ownerId].updateControlWithPlayerData();
-    //playerControls[+action.target].updateControlWithPlayerData();
+    playerControls[action.owner.playerId].updateControlWithPlayerData();
+    playerControls[+action.target].updateControlWithPlayerData();
     return log;
 }
 function populateDOMElementVariables() {

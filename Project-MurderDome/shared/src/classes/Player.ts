@@ -1,8 +1,7 @@
 
 import type { action, stats, vitals } from '../types/types';
 import { PlayerControl } from '../../../client/src/classes/devPlayerControl.js';
-import { Action } from './Action.js';
-import { AttackAction } from './AttackAction.js'
+import { Action } from './Actions.js';
 
 export class Player {
 
@@ -22,17 +21,21 @@ export class Player {
     static readonly DEFAULTMODIFIER: number = 0;
 
 
-    private _playerId: string;
+    public readonly playerId: string;
+
     private _playerName: string;
     private _vitals: vitals;
     private _stats: stats;
     private _action: Action;
+    private _actionType: action
+    private _modifier: number;
+    private _target: number;
 
 
 
     constructor(playerId: string, playerName: string, stats: stats) {
 
-        this._playerId = playerId;
+        this.playerId = playerId;
         this._playerName = playerName;
         this._stats = stats;
 
@@ -48,7 +51,7 @@ export class Player {
     }
 
     public getNameTag(): string {
-        return "[" + this._playerId + "] " + this.getName();
+        return "[" + this.playerId + "] " + this.getName();
     }
 
     public getVitals(): vitals {
@@ -63,6 +66,18 @@ export class Player {
         return this._action;
     }
 
+    public get_actionType(): action {
+        return this._actionType;
+    }
+
+    public get_modifier(): number {
+        return this._modifier;
+    }
+
+    public get_target(): number {
+        return this._target;
+    }
+
     public set_playerName(name: string) {
         this._playerName = name;
     }
@@ -75,18 +90,43 @@ export class Player {
         this._stats = stats;
     }
 
-    public setAction(action: action, target: number, modifier: number): void {
+    public set_actionType(action: action): void {
+        if (Action.isValidAction(action)) {
+            this._actionType = action;
+        } else {
+            this._actionType = undefined;
+        }
+    }
+
+    public set_modifier(mod: number): void {
+        this._modifier = mod;
+    }
+
+    public set_target(target: number): void {
+        this._target = target;
+    }
+
+    /**
+     * This needs to be removed, the player should not have a reference to an actual action, they will just store types instead.
+     * @param action
+     * @param target
+     * @param modifier
+     */
+    public setAction(action: action): void {
 
         if (Action.isValidAction(action)) {
-            if (action === Action.PLAYERACTIONS.attack) {
-                this._action = new AttackAction(this, target, modifier);
-            }
-            //this._action = new Action(action, this._playerId, target, modifier);
+            this._action = Action.buildAction(this);
         } else {
             this._action = undefined;
         }
 
         return;
+    }
+
+    public updateAction(action: action, target: number, modifier: number) {
+        this.set_actionType(action);
+        this.set_target(target);
+        this.set_modifier(modifier);
     }
 
     /**

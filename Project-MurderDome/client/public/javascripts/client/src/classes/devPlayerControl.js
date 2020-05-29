@@ -1,4 +1,4 @@
-import { Action } from '../../../shared/src/classes/Action.js';
+import { Action } from '../../../shared/src/classes/Actions.js';
 import { Player } from '../../../shared/src/classes/Player.js';
 export class PlayerControl {
     constructor(parentElement, id, allPlayerIds) {
@@ -249,7 +249,8 @@ export class PlayerControl {
             target = +selectedOption.value;
         }
         if (mod !== undefined && action && target !== undefined) {
-            this.player.setAction(action, target, mod);
+            this.player.updateAction(action, target, mod);
+            //this.player.setAction(action, target, mod);
         }
         return;
     }

@@ -1,6 +1,6 @@
 
 import type { action, stats, vitals } from '../../../shared/src/types/types';
-import { Action } from '../../../shared/src/classes/Action.js';
+import { Action } from '../../../shared/src/classes/Actions.js';
 import { Player } from '../../../shared/src/classes/Player.js';
 
 export class PlayerControl {
@@ -385,7 +385,8 @@ export class PlayerControl {
 
 
         if (mod !== undefined && action && target !== undefined) {
-            this.player.setAction(action, target, mod);
+            this.player.updateAction(action, target, mod);
+            //this.player.setAction(action, target, mod);
         }
 
 
