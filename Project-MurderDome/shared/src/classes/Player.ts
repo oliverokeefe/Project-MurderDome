@@ -23,118 +23,63 @@ export class Player {
 
     public readonly playerId: string;
 
-    private _playerName: string;
-    private _vitals: vitals;
-    private _stats: stats;
-    private _action: Action;
-    private _actionType: action
-    private _modifier: number;
-    private _target: number;
+    //Below properties need to have their access modifiers properly set for production
+    //Currently they are public for ease of development
+    public playerName: string;
+    public vitals: vitals;
+    public stats: stats;
+    public action: Action;
+    public actionType: action
+    public modifier: number;
+    public targetId: number;
+    public target: Player;
 
 
 
     constructor(playerId: string, playerName: string, stats: stats) {
 
         this.playerId = playerId;
-        this._playerName = playerName;
-        this._stats = stats;
+        this.playerName = playerName;
+        this.stats = stats;
 
         return
     }
 
     public takeDmg(damage: number) {
-        this._vitals.hp = (this._vitals.hp - damage <= 0) ? 0 : this._vitals.hp - damage;
-    }
-
-    public getName(): string {
-        return this._playerName;
+        this.vitals.hp = (this.vitals.hp - damage <= 0) ? 0 : this.vitals.hp - damage;
     }
 
     public getNameTag(): string {
-        return "[" + this.playerId + "] " + this.getName();
+        return "[" + this.playerId + "] " + this.playerName;
     }
 
-    public getVitals(): vitals {
-        return this._vitals;
-    }
+    public setAction(): Action {
 
-    public getStats(): stats {
-        return this._stats;
-    }
-
-    public getAction(): Action {
-        return this._action;
-    }
-
-    public get_actionType(): action {
-        return this._actionType;
-    }
-
-    public get_modifier(): number {
-        return this._modifier;
-    }
-
-    public get_target(): number {
-        return this._target;
-    }
-
-    public set_playerName(name: string) {
-        this._playerName = name;
-    }
-
-    public set_vitals(vitals: vitals) {
-        this._vitals = vitals;
-    }
-
-    public set_stats(stats: stats): void {
-        this._stats = stats;
-    }
-
-    public set_actionType(action: action): void {
-        if (Action.isValidAction(action)) {
-            this._actionType = action;
+        if (Action.isValidAction(this.actionType)) {
+            this.action = Action.buildAction(this);
         } else {
-            this._actionType = undefined;
-        }
-    }
-
-    public set_modifier(mod: number): void {
-        this._modifier = mod;
-    }
-
-    public set_target(target: number): void {
-        this._target = target;
-    }
-
-    /**
-     * This needs to be removed, the player should not have a reference to an actual action, they will just store types instead.
-     * @param action
-     * @param target
-     * @param modifier
-     */
-    public setAction(action: action): void {
-
-        if (Action.isValidAction(action)) {
-            this._action = Action.buildAction(this);
-        } else {
-            this._action = undefined;
+            this.action = undefined;
         }
 
-        return;
+        return this.action;
     }
 
-    public updateAction(action: action, target: number, modifier: number) {
-        this.set_actionType(action);
-        this.set_target(target);
-        this.set_modifier(modifier);
+    public setTarget(target: Player): void {
+        this.target = target;
+    }
+
+    public updateAction(action: action, targetId: number, modifier: number) {
+        this.actionType = action;
+        this.targetId = targetId;
+        this.modifier = modifier;
     }
 
     /**
      * This is for testing, needs to be removed/changed for production
      */
     public updatePlayer(name: string, vitals: vitals, stats: stats): void {
-        this.set_playerName(name);
-        this.set_vitals(vitals);
-        this.set_stats(stats);
+        this.playerName = name;
+        this.vitals = vitals;
+        this.stats = stats;
     }
 }

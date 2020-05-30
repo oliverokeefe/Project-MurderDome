@@ -40,8 +40,8 @@ function displayLog(log) {
 function resolveActions() {
     let log = "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++<br/>";
     playerControls.forEach((playerControl) => {
-        //let action: Action = playerControl.player.getAction();
-        let action = Action.buildAction(playerControl.player);
+        playerControl.player.setTarget(playerControls[playerControl.player.targetId].player);
+        let action = playerControl.player.setAction();
         if (action) {
             actions.push(action);
         }
@@ -49,7 +49,7 @@ function resolveActions() {
     while (!actions.isEmpty()) {
         let action = actions.pop();
         if (action) {
-            log += resolveAction(action) + "<br/>";
+            log += `${resolveAction(action)}++++<br/>`;
         }
     }
     log += "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++<br/>";
@@ -57,16 +57,9 @@ function resolveActions() {
 }
 function resolveAction(action) {
     let log = "";
-    //log = "+" + action.owner.getNameTag() + ": " + action.action + "<br/>";
     log += action.resolve();
-    //if (action.action === Action.PLAYERACTIONS.attack) {
-    //    log += "+++ if(" + playerControls[+action.target].player.getName() + " attack-response roll exists&fails)<br/>";
-    //    log += "+++++ if(" + action.owner.getName() + " attack roll succeed)<br/>";
-    //    log += "+++++++ " + action.owner.getName() + " damage roll<br/>";
-    //    log += "+++++++ " + playerControls[+action.target].player.getName() + " take damage<br/>";
-    //}
     playerControls[action.owner.playerId].updateControlWithPlayerData();
-    playerControls[+action.target].updateControlWithPlayerData();
+    playerControls[action.target.targetId].updateControlWithPlayerData();
     return log;
 }
 function populateDOMElementVariables() {

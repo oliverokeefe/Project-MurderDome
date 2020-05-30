@@ -1,7 +1,7 @@
 let Action = /** @class */ (() => {
     class Action {
         constructor(owner, target, modifier) {
-            this.action = "";
+            this.actionType = "";
             this.owner = owner;
             this.mod = modifier;
             this.target = target;
@@ -14,25 +14,25 @@ let Action = /** @class */ (() => {
         }
         static buildAction(owner) {
             let action = undefined;
-            if (Action.isValidAction(owner.get_actionType())) {
-                switch (owner.get_actionType()) {
+            if (Action.isValidAction(owner.actionType)) {
+                switch (owner.actionType) {
                     case (Action.PLAYERACTIONS.attack):
-                        action = new Attack(owner, owner.get_target(), owner.get_modifier());
+                        action = new Attack(owner, owner.target, owner.modifier);
                         break;
                     case (Action.PLAYERACTIONS.hide):
-                        action = new Hide(owner, owner.get_target(), owner.get_modifier());
+                        action = new Hide(owner, owner.target, owner.modifier);
                         break;
                     case (Action.PLAYERACTIONS.move):
-                        action = new Move(owner, owner.get_target(), owner.get_modifier());
+                        action = new Move(owner, owner.target, owner.modifier);
                         break;
                     case (Action.PLAYERACTIONS.search):
-                        action = new Search(owner, owner.get_target(), owner.get_modifier());
+                        action = new Search(owner, owner.target, owner.modifier);
                         break;
                     case (Action.PLAYERACTIONS.rest):
-                        action = new Rest(owner, owner.get_target(), owner.get_modifier());
+                        action = new Rest(owner, owner.target, owner.modifier);
                         break;
                     case (Action.PLAYERACTIONS.wait):
-                        action = new Wait(owner, owner.get_target(), owner.get_modifier());
+                        action = new Wait(owner, owner.target, owner.modifier);
                         break;
                     default:
                         break;
@@ -41,7 +41,7 @@ let Action = /** @class */ (() => {
             return action;
         }
         resolve() {
-            return "+" + this.owner.getNameTag() + ":: " + this.action + "<br/>";
+            return `+${this.owner.getNameTag()}:: ${this.actionType} <br/>`;
         }
         attackResponse() {
             return "";
@@ -61,50 +61,60 @@ export { Action };
 export class Attack extends Action {
     constructor(owner, target, modifier) {
         super(owner, target, modifier);
-        this.action = Action.PLAYERACTIONS.attack;
+        this.actionType = Action.PLAYERACTIONS.attack;
         this._priority = 1;
     }
     resolve() {
         let log = "";
         log += super.resolve();
+        log += `++Begin Action<br/>`;
+        log += this.target.action.attackResponse();
+        log += `++++${this.owner.playerName} attack role<br/>`;
+        log += `++++${this.owner.playerName} damage role<br/>`;
+        log += `++++${this.target.playerName} take damage<br/>`;
+        log += `++End Action<br/>`;
         return log;
     }
 }
 export class Hide extends Action {
     constructor(owner, target, modifier) {
         super(owner, target, modifier);
-        this.action = Action.PLAYERACTIONS.hide;
+        this.actionType = Action.PLAYERACTIONS.hide;
         this._priority = 2;
+    }
+    attackResponse() {
+        return `+++${this.owner.playerName} hiding attack response<br/>`;
+        ;
     }
 }
 export class Move extends Action {
     constructor(owner, target, modifier) {
         super(owner, target, modifier);
-        this.action = Action.PLAYERACTIONS.move;
+        this.actionType = Action.PLAYERACTIONS.move;
         this._priority = 3;
     }
     attackResponse() {
-        return this.owner.getName() + " attack response";
+        return `+++${this.owner.playerName} moving attack response<br/>`;
     }
 }
 export class Search extends Action {
     constructor(owner, target, modifier) {
         super(owner, target, modifier);
-        this.action = Action.PLAYERACTIONS.search;
+        this.actionType = Action.PLAYERACTIONS.search;
         this._priority = 4;
     }
 }
 export class Rest extends Action {
     constructor(owner, target, modifier) {
         super(owner, target, modifier);
-        this.action = Action.PLAYERACTIONS.rest;
+        this.actionType = Action.PLAYERACTIONS.rest;
         this._priority = 5;
     }
 }
 export class Wait extends Action {
     constructor(owner, target, modifier) {
         super(owner, target, modifier);
-        this.action = Action.PLAYERACTIONS.wait;
+        this.actionType = Action.PLAYERACTIONS.wait;
         this._priority = 6;
     }
 }

@@ -395,14 +395,14 @@ export class PlayerControl {
 
     public updateControlWithPlayerData(): void {
 
-        this._playerNameElement.value = this.player.getName();
+        this._playerNameElement.value = this.player.playerName;
         
-        let vitals: vitals = this.player.getVitals();
+        let vitals: vitals = this.player.vitals;
         this._hpElement.value = vitals.hp + "";
         this._sanElement.value = vitals.san + "";
         this._staElement.value = vitals.sta + "";
 
-        let stats: stats = this.player.getStats();
+        let stats: stats = this.player.stats;
         this._strElement.value = stats.str + "";
         this._dexElement.value = stats.dex + "";
         this._conElement.value = stats.con + "";

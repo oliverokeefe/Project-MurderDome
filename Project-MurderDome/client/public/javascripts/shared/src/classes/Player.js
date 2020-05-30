@@ -3,87 +3,40 @@ let Player = /** @class */ (() => {
     class Player {
         constructor(playerId, playerName, stats) {
             this.playerId = playerId;
-            this._playerName = playerName;
-            this._stats = stats;
+            this.playerName = playerName;
+            this.stats = stats;
             return;
         }
         takeDmg(damage) {
-            this._vitals.hp = (this._vitals.hp - damage <= 0) ? 0 : this._vitals.hp - damage;
-        }
-        getName() {
-            return this._playerName;
+            this.vitals.hp = (this.vitals.hp - damage <= 0) ? 0 : this.vitals.hp - damage;
         }
         getNameTag() {
-            return "[" + this.playerId + "] " + this.getName();
+            return "[" + this.playerId + "] " + this.playerName;
         }
-        getVitals() {
-            return this._vitals;
-        }
-        getStats() {
-            return this._stats;
-        }
-        getAction() {
-            return this._action;
-        }
-        get_actionType() {
-            return this._actionType;
-        }
-        get_modifier() {
-            return this._modifier;
-        }
-        get_target() {
-            return this._target;
-        }
-        set_playerName(name) {
-            this._playerName = name;
-        }
-        set_vitals(vitals) {
-            this._vitals = vitals;
-        }
-        set_stats(stats) {
-            this._stats = stats;
-        }
-        set_actionType(action) {
-            if (Action.isValidAction(action)) {
-                this._actionType = action;
+        setAction() {
+            if (Action.isValidAction(this.actionType)) {
+                this.action = Action.buildAction(this);
             }
             else {
-                this._actionType = undefined;
+                this.action = undefined;
             }
+            return this.action;
         }
-        set_modifier(mod) {
-            this._modifier = mod;
+        setTarget(target) {
+            this.target = target;
         }
-        set_target(target) {
-            this._target = target;
-        }
-        /**
-         * This needs to be removed, the player should not have a reference to an actual action, they will just store types instead.
-         * @param action
-         * @param target
-         * @param modifier
-         */
-        setAction(action) {
-            if (Action.isValidAction(action)) {
-                this._action = Action.buildAction(this);
-            }
-            else {
-                this._action = undefined;
-            }
-            return;
-        }
-        updateAction(action, target, modifier) {
-            this.set_actionType(action);
-            this.set_target(target);
-            this.set_modifier(modifier);
+        updateAction(action, targetId, modifier) {
+            this.actionType = action;
+            this.targetId = targetId;
+            this.modifier = modifier;
         }
         /**
          * This is for testing, needs to be removed/changed for production
          */
         updatePlayer(name, vitals, stats) {
-            this.set_playerName(name);
-            this.set_vitals(vitals);
-            this.set_stats(stats);
+            this.playerName = name;
+            this.vitals = vitals;
+            this.stats = stats;
         }
     }
     Player.STARTINGVITALS = {
