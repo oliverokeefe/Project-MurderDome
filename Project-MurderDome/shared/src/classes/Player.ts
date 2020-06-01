@@ -1,5 +1,5 @@
 
-import type { action, stats, vitals } from '../types/types';
+import type { actionKey, stats, vitals } from '../types/types';
 import { PlayerControl } from '../../../client/src/classes/devPlayerControl.js';
 import { Action } from './Actions.js';
 
@@ -29,7 +29,7 @@ export class Player {
     public vitals: vitals;
     public stats: stats;
     public action: Action;
-    public actionType: action
+    public actionKey: actionKey
     public modifier: number;
     public targetId: number;
     public target: Player;
@@ -55,7 +55,7 @@ export class Player {
 
     public setAction(): Action {
 
-        if (Action.isValidAction(this.actionType)) {
+        if (Action.isValidAction(this.actionKey)) {
             this.action = Action.buildAction(this);
         } else {
             this.action = undefined;
@@ -68,8 +68,8 @@ export class Player {
         this.target = target;
     }
 
-    public updateAction(action: action, targetId: number, modifier: number) {
-        this.actionType = action;
+    public updateAction(action: actionKey, targetId: number, modifier: number) {
+        this.actionKey = action;
         this.targetId = targetId;
         this.modifier = modifier;
     }

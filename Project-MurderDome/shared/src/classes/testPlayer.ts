@@ -1,5 +1,5 @@
 
-import type { action } from '../types/types';
+import type { actionKey } from '../types/types';
 import { testAction } from './testAction.js';
 
 export class testPlayer {
@@ -74,7 +74,7 @@ export class testPlayer {
             let selectedOption: HTMLOptionElement = this._selectElement.options.item(this._selectElement.selectedIndex);
 
             if (testAction.isValidAction(selectedOption.value)) {
-                this._selectedAction = new testAction(selectedOption.value as action, this.name);
+                this._selectedAction = new testAction(selectedOption.value as actionKey, this.name);
             } else {
                 this._selectedAction = undefined;
             }

@@ -1,5 +1,5 @@
 
-import type { action, stats, vitals } from '../../../shared/src/types/types';
+import type { actionKey, stats, vitals } from '../../../shared/src/types/types';
 import { Action } from '../../../shared/src/classes/Actions.js';
 import { Player } from '../../../shared/src/classes/Player.js';
 
@@ -362,7 +362,7 @@ export class PlayerControl {
     private updatePlayerAction(): void {
 
         let mod: number = undefined;
-        let action: action = undefined;
+        let action: actionKey = undefined;
         let target: number = undefined;
 
 
@@ -373,7 +373,7 @@ export class PlayerControl {
             let selectedOption: HTMLOptionElement = this._actionSelectElement.options.item(this._actionSelectElement.selectedIndex);
 
             if (Action.isValidAction(selectedOption.value)) {
-                action = selectedOption.value as action;
+                action = selectedOption.value as actionKey;
             }
         }
 

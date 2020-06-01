@@ -1,10 +1,10 @@
 
-import { action } from '../types/types';
+import { actionKey, actions } from '../types/types';
 import { Player } from './Player.js';
 
 export abstract class Action {
 
-    static readonly PLAYERACTIONS = {
+    static readonly PLAYERACTIONS: actions = {
         attack: "attack",
         hide: "hide",
         move: "move",
@@ -45,9 +45,9 @@ export abstract class Action {
 
         let action: Action = undefined;
 
-        if (Action.isValidAction(owner.actionType)) {
+        if (Action.isValidAction(owner.actionKey)) {
 
-            switch (owner.actionType) {
+            switch (owner.actionKey) {
                 case (Action.PLAYERACTIONS.attack):
                     action = new Attack(owner, owner.target, owner.modifier);
                     break;

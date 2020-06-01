@@ -1,5 +1,5 @@
 
-import type { action } from '../types/types';
+import type { actionKey } from '../types/types';
 
 export class testAction {
 
@@ -12,7 +12,7 @@ export class testAction {
 
     private _priority: number;
 
-    constructor(action: action, owner: string) {
+    constructor(action: actionKey, owner: string) {
         this.owner = owner;
         this.action = action;
 
