@@ -65,6 +65,9 @@
     <TypeScriptCompile Include="shared\src\classes\Dice.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="shared\src\classes\Game.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="shared\src\classes\testAction.ts" />
     <TypeScriptCompile Include="shared\src\classes\Actions.ts" />
     <TypeScriptCompile Include="client\src\classes\PriorityQueue.ts">
