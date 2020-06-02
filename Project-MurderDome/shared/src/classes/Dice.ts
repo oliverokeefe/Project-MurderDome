@@ -2,34 +2,37 @@
 import { roll } from '../types/types';
 
 
+
 export class Dice {
 
-    constructor() {
-
+    private static _roll(): roll {
+        return {
+            value: this._rollPercentDice(),
+            success: undefined,
+            crit: undefined
+        };
     }
 
-    private static rollPercentDice(): number {
+    private static _rollPercentDice(): number {
         return Math.floor(Math.random() * 100) + 1;
     }
 
-    private static isCrit(value: number): boolean {
+    private static _isCrit(value: number): boolean {
         let valueStr: string = value.toString();
         return (valueStr.length === 2 && valueStr[0] === valueStr[1]) || (value === 1) || (value === 100);
     }
 
-    public static statRoll(stat: number, modifier: number): roll {
+    private static _isSuccess(value: number, successPercent: number): boolean {
+        return (value != 100 && value <= successPercent)
+    }
 
-        let roll: roll = {
-            value: this.rollPercentDice(),
-            success: false,
-            crit: false
-        };
+    public static roll(successPercent: number, modifier: number): roll {
 
-        if (roll.value != 100 && roll.value <= stat*5) {
-            roll.success = true;
-        }
+        let roll: roll = this._roll();
 
-        roll.crit = this.isCrit(roll.value);
+        roll.success = this._isSuccess(roll.value+modifier, successPercent);
+
+        roll.crit = this._isCrit(roll.value);
 
         return roll;
     }

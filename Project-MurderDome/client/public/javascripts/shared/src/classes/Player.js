@@ -14,7 +14,7 @@ let Player = /** @class */ (() => {
             return "[" + this.playerId + "] " + this.playerName;
         }
         setAction() {
-            if (Action.isValidAction(this.actionType)) {
+            if (Action.isValidAction(this.actionKey)) {
                 this.action = Action.buildAction(this);
             }
             else {
@@ -26,7 +26,7 @@ let Player = /** @class */ (() => {
             this.target = target;
         }
         updateAction(action, targetId, modifier) {
-            this.actionType = action;
+            this.actionKey = action;
             this.targetId = targetId;
             this.modifier = modifier;
         }

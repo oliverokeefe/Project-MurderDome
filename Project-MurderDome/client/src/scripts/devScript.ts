@@ -83,10 +83,15 @@ function resolveAction(action: Action): string {
     let log: string = "";
     log += action.resolve();
 
-    playerControls[action.owner.playerId].updateControlWithPlayerData();
-    playerControls[action.target.targetId].updateControlWithPlayerData();
+    updatePlayerControls();
 
     return log;
+}
+
+function updatePlayerControls() {
+    playerControls.forEach(function (playerControl) {
+        playerControl.updateControlWithPlayerData();
+    });
 }
 
 function populateDOMElementVariables() {

@@ -58,9 +58,13 @@ function resolveActions() {
 function resolveAction(action) {
     let log = "";
     log += action.resolve();
-    playerControls[action.owner.playerId].updateControlWithPlayerData();
-    playerControls[action.target.targetId].updateControlWithPlayerData();
+    updatePlayerControls();
     return log;
+}
+function updatePlayerControls() {
+    playerControls.forEach(function (playerControl) {
+        playerControl.updateControlWithPlayerData();
+    });
 }
 function populateDOMElementVariables() {
     PlayerAmtElement = document.getElementById("PlayerAmt");

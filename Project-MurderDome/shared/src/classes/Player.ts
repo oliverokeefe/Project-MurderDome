@@ -82,4 +82,8 @@ export class Player {
         this.vitals = vitals;
         this.stats = stats;
     }
+
 }
+
+
+
