@@ -32,9 +32,19 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="server\server.ts" />
+    <Content Include="client\public\stylesheets\main.css" />
     <Content Include="client\public\stylesheets\devStyle.css" />
     <Content Include="client\public\stylesheets\testStyle.css" />
+    <Content Include="client\public\views\createGame.html">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="client\public\views\createPlayer.html">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="client\public\views\devPage.html" />
+    <Content Include="client\public\views\player.html">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="client\public\views\testPage.html" />
     <Content Include="client\tsconfig.json" />
     <Content Include="server\tsconfig.json" />

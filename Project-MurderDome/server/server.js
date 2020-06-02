@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const debug = require("debug");
 const express = require("express");
 const path = require("path");
-//import classes from './routes/classes';
 const app = express();
 let http = require('http').createServer(app);
 let io = require('socket.io')(http);
@@ -12,15 +11,51 @@ let io = require('socket.io')(http);
 //    next();
 //});
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/public/views', 'testPage.html'));
+    res.sendFile(path.join(__dirname, '../client/public/views', 'createGame.html'));
 });
 app.use(express.static(path.join(__dirname, '../client/public')));
-//app.use('/\*/classes/', classes);
+let games = {};
 io.on('connection', (socket) => {
     console.log('a user connected');
     socket.on('EnterBtnClicked', (msg) => {
         console.log('message: ' + msg);
         io.emit('Output', msg + "</br></br>This Came From Server!");
+    });
+    socket.on('joinGame', (game) => {
+        //Delete the game if leaving and was last player
+        if (socket.game) {
+            socket.leave(socket.game);
+            if (socket.playerName && games[socket.game] && games[socket.game][socket.playerName]) {
+                delete games[socket.game][socket.playerName];
+            }
+            if (games[socket.game] && Object.keys(games[socket.game]).length === 0) {
+                delete games[socket.game];
+            }
+        }
+        socket.join(game);
+        //Save new game data to player and create game if new game
+        socket.game = game;
+        if (!games[socket.game]) {
+            games[socket.game] = {};
+        }
+        ;
+        socket.emit('message', {
+            msg: "Here",
+            game: games
+        });
+        socket.broadcast.to(game).emit('message', { msg: "There" });
+        io.sockets.in(socket.game).emit('message', { msg: "WE" });
+        console.log('Player Joined Game: ' + game);
+        console.log(games);
+    });
+    socket.on('createPlayer', (player) => {
+        if (socket.game && games[socket.game]) {
+            delete games[socket.game][socket.playerName];
+            games[socket.game][player] = player;
+        }
+        socket.playerName = player;
+        console.log(`${player} Created`);
+        console.log(games);
     });
     socket.on('disconnect', () => {
         console.log('user disconnected');
