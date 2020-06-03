@@ -33,12 +33,15 @@
             return;
         }
 
-        function msgHandler(msg) {
-            console.log(msg);
-            //msg();
+        function msgHandler(msg, obj) {
 
-            let output = document.getElementById("output");
-            output.innerText = msg.msg;
+            console.log(msg);
+            if (obj) {
+                console.log(obj);
+            }
+
+            //let output = document.getElementById("output");
+            //output.innerText = msg.msg;
 
             return;
         }

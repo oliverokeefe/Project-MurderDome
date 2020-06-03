@@ -41,6 +41,7 @@ export class Player {
         this.playerId = playerId;
         this.playerName = playerName;
         this.stats = stats;
+        this.vitals = Player.STARTINGVITALS;
 
         return
     }

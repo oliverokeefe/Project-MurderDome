@@ -1,4 +1,7 @@
-import { Action } from './Actions.js';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Player = void 0;
+const Actions_js_1 = require("./Actions.js");
 let Player = /** @class */ (() => {
     class Player {
         constructor(playerId, playerName, stats) {
@@ -15,8 +18,8 @@ let Player = /** @class */ (() => {
             return "[" + this.playerId + "] " + this.playerName;
         }
         setAction() {
-            if (Action.isValidAction(this.actionKey)) {
-                this.action = Action.buildAction(this);
+            if (Actions_js_1.Action.isValidAction(this.actionKey)) {
+                this.action = Actions_js_1.Action.buildAction(this);
             }
             else {
                 this.action = undefined;
@@ -56,5 +59,5 @@ let Player = /** @class */ (() => {
     Player.DEFAULTMODIFIER = 0;
     return Player;
 })();
-export { Player };
+exports.Player = Player;
 //# sourceMappingURL=Player.js.map
