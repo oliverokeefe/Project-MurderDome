@@ -5,33 +5,27 @@ body {
     padding-left:     5px;
 }
 
-.PlayersContainerCore {
+label {
+
+}
+
+.nodisp {
+    display: none;
+}
+
+.configSection {
     display: flex;
+    flex-direction: column;
+    height: 350px;
+    justify-content: flex-end;
 }
 
-.PlayerControlContainer {
-
+.configSectionTopInput {
+    flex-grow: 1;
 }
 
-.PlayerControlContainerCore {
-
-}
-
-.Section {
-}
-
-.InputContainer {
-
-}
-
-.PlayerName {
-}
-
-.PlayerVitals {
-
-}
-
-.PlayerStats {
-
+.label {
+    min-width: 5rem;
+    display: inline;
 }
 

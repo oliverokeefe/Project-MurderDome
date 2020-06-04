@@ -35,6 +35,7 @@
     <Content Include="client\public\stylesheets\main.css" />
     <Content Include="client\public\stylesheets\devStyle.css" />
     <Content Include="client\public\stylesheets\testStyle.css" />
+    <Content Include="client\public\views\index.html" />
     <Content Include="client\public\views\createGame.html">
       <SubType>Code</SubType>
     </Content>
@@ -71,6 +72,7 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="client\src\classes\devPlayerControl.ts" />
+    <TypeScriptCompile Include="client\src\scripts\main.ts" />
     <TypeScriptCompile Include="client\src\scripts\devScript.ts" />
     <TypeScriptCompile Include="shared\src\classes\Dice.ts">
       <SubType>Code</SubType>

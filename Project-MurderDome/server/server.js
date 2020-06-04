@@ -12,10 +12,49 @@ let io = require('socket.io')(http);
 //    next();
 //});
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/public/views', 'createGame.html'));
+    res.sendFile(path.join(__dirname, '../client/public/views', 'index.html'));
 });
 app.use(express.static(path.join(__dirname, '../client/public')));
 let games = { sessions: 0 };
+///Helpful functions for creating/joining or leaving/deleting a game.
+///as well as creating/updating or removing a character.
+///++++++++++++++++++++++++++++++++++++++++++++++++++
+function createGame(game) {
+    games[game] = { playerTotal: 0 };
+    return game;
+}
+function addPlayer(game, playerName) {
+    if (games[game]) {
+        games[game][playerName] = playerName;
+        games[game].playerTotal++;
+        return playerName;
+    }
+    return "";
+}
+function removePlayer(game, playerName) {
+    if (games[game] && games[game][playerName]) {
+        delete games[game][playerName];
+        games[game].playerTotal--;
+        deleteGameIfEmpty(game);
+        return "";
+    }
+    return game;
+}
+function replacePlayer(game, oldPlayerName, newPlayerName) {
+    if (games[game] && games[game][oldPlayerName]) {
+        delete games[game][oldPlayerName];
+        games[game][newPlayerName] = newPlayerName;
+        return newPlayerName;
+    }
+    return "";
+}
+function deleteGameIfEmpty(game) {
+    if (games[game] && games[game].playerTotal === 0) {
+        delete games[game];
+    }
+    return;
+}
+///++++++++++++++++++++++++++++++++++++++++++++++++++
 io.on('connection', (socket) => {
     console.log('a user connected');
     ///Game init config on socket
@@ -23,28 +62,33 @@ io.on('connection', (socket) => {
     socket.game = "";
     socket.playerName = "";
     ///++++++++++++++++++++++++++++++++++++++++++++++++++
-    ///Helpful functions for creating/joining or leaving/deleting a game.
-    ///as well as creating/updating or removing a character.
-    ///++++++++++++++++++++++++++++++++++++++++++++++++++
-    socket.createGame = function (game) {
+    socket.createPlayer = function (playerName) {
+        if (socket.game) {
+            if (socket.playerName) {
+                socket.playerName = replacePlayer(socket.game, socket.playerName, playerName);
+            }
+            else {
+                socket.playerName = addPlayer(socket.game, playerName);
+            }
+        }
     };
-    //create and join if game does not exsist
     socket.joinGame = function (game) {
-    };
-    socket.addPlayer = function (game, playerName) {
-    };
-    socket.removePlayer = function (game, playerName) {
+        socket.leaveGame();
+        socket.join(game);
+        socket.game = game;
+        if (socket.playerName) {
+            addPlayer(socket.game, socket.playerName);
+        }
     };
     socket.leaveGame = function () {
-        socket.leave(socket.game);
         if (socket.game) {
-            if (socket.playerName && games[socket.game] && games[socket.game][socket.playerName]) {
-                delete games[socket.game][socket.playerName];
+            socket.leave(socket.game);
+            if (socket.playerName) {
+                socket.game = removePlayer(socket.game, socket.playerName);
             }
-            if (games[socket.game] && Object.keys(games[socket.game]).length === 0) {
-                delete games[socket.game];
+            else {
+                socket.game = "";
             }
-            socket.game = "";
         }
     };
     socket.on('EnterBtnClicked', (msg) => {
@@ -54,7 +98,6 @@ io.on('connection', (socket) => {
     socket.on('joinGame', (game) => {
         //Delete the game if leaving and was last player
         socket.leaveGame();
-        socket.join(game);
         //Save new game data to player and create game if new game
         socket.game = game;
         if (!games[socket.game]) {
