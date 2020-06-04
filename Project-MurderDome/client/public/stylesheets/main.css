@@ -16,7 +16,7 @@ label {
 .configSection {
     display: flex;
     flex-direction: column;
-    height: 350px;
+    min-height: 200px;
     justify-content: flex-end;
 }
 
@@ -25,7 +25,8 @@ label {
 }
 
 .label {
-    min-width: 5rem;
-    display: inline;
+    min-width: 60px;
+    display: inline-block;
+    text-align: right;
 }
 
